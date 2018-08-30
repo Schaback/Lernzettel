@@ -1,0 +1,148 @@
+\documentclass[a4paper]{article}
+
+\usepackage[l2tabu, orthodox]{nag}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[ngerman]{babel}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{dsfont}
+
+\usepackage[framed]{ntheorem}
+
+\usepackage{csquotes}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{enumitem}
+
+\usepackage{faktor}
+
+\usepackage{parskip}
+\usepackage{multicol}
+
+\usepackage{array}
+\usepackage{blindtext}
+\usepackage{float}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage[left=1.8cm, right=1.8cm, top=1.8cm, bottom=2.5cm]{geometry}
+
+\newcounter{Sec}
+
+\theoremstyle{marginbreak}
+\theorembodyfont{\normalfont}
+\newtheorem{definition}{Definition}[Sec]
+\newtheorem{satz}[definition]{Satz}
+\newtheorem{defsatz}[definition]{Definition und Satz}
+\newtheorem{verfahren}[definition]{Verfahren}
+\newtheorem{defver}[definition]{Definition und Verfahren}
+\newtheorem{defsatzver}[definition]{Definition, Satz und Verfahren}
+\newtheorem{satzver}[definition]{Satz und Verfahren}
+\newtheorem{folgerung}[definition]{Folgerung}
+
+\MakeOuterQuote{"}
+\DeclareMathOperator{\ffa}{ffa}
+
+\newcommand{\sep}{%
+	\rule{\textwidth}{0.3pt}%
+	\stepcounter{Sec}%
+}
+\newcommand{\defiff}{\mathrel{\vcentcolon\Longleftrightarrow}}
+
+\newcommand{\en}{~(n\to\infty)}
+\newcommand{\series}[1][1]{\sum_{n=#1}^\infty}
+\newcommand{\ps}[1][a]{\series[0]#1_n(x-x_0)^n}
+\renewcommand{\d}{\dd}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\A}{\mathfrak{A}}
+\newcommand{\B}{\mathfrak{B}}
+\renewcommand{\i}{\mathrm{i}}
+\newcommand{\D}{\mathbb{D}}
+\newcommand{\compl}[1]{#1^\mathsf{c}}
+\newcommand{\sa}{$\sigma$-Algebra}
+\newcommand{\Ri}{\mathfrak{R}}
+
+\renewcommand{\L}[1]{\mathfrak{L}^{#1}(X)}
+\newcommand{\LL}[1]{L^{#1}(X)}
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{N}{@{}m{0pt}@{}}
+
+\setlength\columnsep{1.5cm}
+
+\DeclareMathOperator{\Spek}{Spek}
+\DeclareMathOperator{\Kern}{Kern}
+\DeclareMathOperator{\arsinh}{arsinh}
+\DeclareMathOperator{\arcosh}{arcosh}
+\DeclareMathOperator{\artanh}{artanh}
+\DeclareMathOperator{\ddiv}{div}
+\DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\spur}{spur}
+
+\DeclarePairedDelimiterX\set[1]\lbrace\rbrace{\def\given{\;\delimsize\vert\;}#1}
+
+\newcommand\restr[2]{{#1_{\mkern 1mu \vrule height 2ex\mkern2mu #2}}}
+
+\author{Philipp Schaback}
+\title{Numerik - Lösungsverfahren}
+\begin{document}
+	\textsc{LR-Zerlegung ohne Pivot}
+	\sep
+	\begin{satz}[Existenz]
+		Eine Matrix $A \in \mathbb{R}^{\mathbb{N}x\mathbb{N}} $ besitzt genau dann ein LR-Zerlegung von A, wenn alle Hauptuntermatrizen $A[1:n,1:n]$ regulär sind.
+	\end{satz}
+	\begin{satz}[Hinreichende Bedingung 1]
+		Ist eine Matrix $A \in \mathbb{R}^{\mathbb{N}x\mathbb{N}} $ strikt diagonal-dominant, d.h. es gilt:
+		\begin{description}
+			\item $ |A[n,n]| > \sum_{k=1 k\ne n}^{N} |A[n,k]|$ für $n=1,...,N$
+		\end{description}
+		dann existiert eine LR-Zerlegung für A.
+	\end{satz}
+	\begin{satz}[Hinreichende Bedingung 2]
+		Ist eine Matrix $A \in \mathbb{R}^{\mathbb{N}x\mathbb{N}} $ positiv definit, d.h. es gilt:
+		\begin{description}
+			\item $ x^TAx > 0 $ für alle $ x \in \mathbb{R}^\mathbb{N},x \ne 0$
+		\end{description}
+		dann existiert eine LR-Zerlegung für A.
+	\end{satz}
+	\begin{verfahren}
+		Zerlege $A$ in $A=LR$ mit $ L \in \mathbb{R}^{\mathbb{N}x\mathbb{N}}$ normierte, untere Dreiecksmatrix und $ R \in \mathbb{R}^{\mathbb{N}x\mathbb{N}}$ reguläre obere Dreiecksmatrix, d.h.:
+		\begin{description}
+			\item $ L =
+			\begin{pmatrix}
+				1 & 0 & 0 & 0 \\
+				* & 1 & 0 & 0 \\
+				* & * & 1 & 0 \\
+				* & * & * & 1
+			\end{pmatrix}
+			$\space
+			$
+			R = 
+			\begin{pmatrix}
+			* & * & * & * \\
+			0 & * & * & * \\
+			0 & 0 & * & * \\
+			0 & 0 & 0 & *
+			\end{pmatrix}
+			$ mit $det(R) \ne 0$
+		\end{description}
+		Berechne dann mit Vorwärts-Substitution $ Ly = b$ und anschließend $ Rx = y$ mit Rückwärts-Substitution.
+	\end{verfahren}
+	\textsc{Cholesky-Zerlegung}
+	\sep
+	
+\end{document}
