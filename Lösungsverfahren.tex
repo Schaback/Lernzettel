@@ -144,7 +144,17 @@
 	\end{verfahren}
 	\textsc{Cholesky-Zerlegung}
 	\sep
-	
+	\begin{satz}
+		Ist $ A \in \mathbb{R}^{\mathbb{N}x\mathbb{N}}$ symmetrisch und positiv definit, dann existiert genau eine Cholesky-Zerlegung $A=LL^T$ mit L untere Dreiecksmatrix.
+	\end{satz}
+	\begin{verfahren}
+		\begin{enumerate}
+			\item Berechne $L$ und $L^T$. Dann folgt: $Ax = b \implies LL^Tx = b $
+			\item Berechne mit Vorwärts-Substitution $Ly = b$
+			\item Berechne mit Rückwärts-Substitution $L^Tx = y$
+		\end{enumerate}
+	\end{verfahren}
+
 	\textsc{Fixpunktiteration}
 	\sep
 	\begin{definition}[Fixpunkt]
@@ -180,5 +190,4 @@
 			definierte Folge konvergiert gegen $x^*$ für jeden Startwert $x_0 \in D$ 
 		\end{enumerate}
 	\end{satz}
-
 \end{document}
