@@ -154,4 +154,40 @@
 			\item Berechne mit Rückwärts-Substitution $L^Tx = y$
 		\end{enumerate}
 	\end{verfahren}
+
+	\textsc{Fixpunktiteration}
+	\sep
+	\begin{definition}[Fixpunkt]
+		Für eine Funktion $F : D \to D \subset \mathbb{R}^\mathbb{N}$ gilt
+		\begin{description}
+			\item $F(x) = x$
+		\end{description}
+		dann ist $x$ ein Fixpunkt.
+	\end{definition}
+
+	\begin{satz}
+		Die Nullstellengleichung $f(x) = 0$ ist äquivalent zu $-Af(x) = 0$ wobei $A \in \mathbb{R}^{\mathbb{N}\mathbb{N}}$ invertierbar ist.\\
+		Diese Gleichung ist äquivalent zu der Fixpunktgleichung $x - Af(x) = x$ oder $F(x)=x$ mit $F(x) = x - Af(x)$\\
+		
+		Die Folge $x_{n+1} = F(x_n)$ konvergiert gegen $x$, sofern $x_0$ korrekt gewählt ist.
+	\end{satz}
+
+	\begin{definition}[Kontraktion]
+		Eine Abbildung $F : D \to D \subset \mathbb{R}^\mathbb{N}$ ist eine Kontraktion auf $D$, falls ein $0 \leq \theta < 1$ existiert mit
+		\begin{description}
+			\item $||F(x) - F(y)|| \leq \theta ||x - y||$
+		\end{description}
+		für jedes $x, y \in D$
+	\end{definition}
+
+	\begin{satz}[Banachscher Fixpunktsatz]
+		Es sei $F : D \to D \subset \mathbb{R}^\mathbb{N}$ eine Kontraktion auf $D$, $D$ abgeschlossene Teilmenge des $\mathbb{R}^\mathbb{N}$, mit Kontraktionszahl $0 \leq \theta < 1$. \\
+		Dann gilt:
+		\begin{enumerate}
+			\item Es existiert genau ein Fixpunkt $x^*$ von F.
+			\item Die durch Vorschrift\\
+				$x_{k+1} = F(x_k)$ \\
+			definierte Folge konvergiert gegen $x^*$ für jeden Startwert $x_0 \in D$ 
+		\end{enumerate}
+	\end{satz}
 \end{document}
