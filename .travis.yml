@@ -1,0 +1,19 @@
+sudo: required
+services: docker
+notifications:
+  email: false
+before_install:
+    - docker pull rekka/tectonic
+script:
+    - docker run --mount src=$TRAVIS_BUILD_DIR,target=/usr/src/tex,type=bind rekka/tectonic tectonic lernzettel.tex
+branches:
+  only: 
+    - master
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: n8oovC4dbzeaYRY+Z98baWfffkjiIQOI7+V3altLN0u08/aa0oTo6MQLs5IO7ZhOja4GAcnjayp5MYC9hRAAt86lG8kBgc9eBQ2UdthIfgMNfdZW31T2akhWA67iZdU+RdGAo4kkAwtX4dtmIT8aus6qvIkkNrYymerL3DHeOu9RUW153QqVx+2sxjPD1uVLNn/yC7XtgXFikjuwOV1hALTExqr9qioOeex+BJ/tVw0HXIsUCyhrDSiDySFMIwRlXeTifNmNMYgFCvnkzxVfwgA+1Ogd++apS6SBwc0VxY/uWNbPDn8Klm9OfV4gWkLQAX8dtIAW/HndcEcbYFILAhDrlcDd7AC6btkCQvLfVUCpoGnStA8+TjjevkbxQT/LNZ7tLOFqNDwJCGgd5+DojkF4hSUrV/Y0jWgmN44V0dBrcwxvfeB2CH1Vh2Kit2YZQkW/9gc2TM/duSsAut3F8Xh4hjEcc1p0BI/qAzGSvR8xJSYV6dCJoqh1JdqQu1dzY88E7Ubv62Yo5EjDi+m4+3H+EsWue1ci8SfS98lQP1zzh5Ite24Jnk9mPBVOM4pUTuKLEHK7qTudb2JXMNFEXcYy8VdhFqphRWAnNHKN+RBwtKqQn/0qR4bM4qmyvG0BHpxmMrx7wmhDMFCC7AwejtcJAeyAP2XvztP2WV5v5Gw=
+  file: lernzettel.pdf
+  on:
+    repo: Schaback/Lernzettel
