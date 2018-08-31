@@ -132,7 +132,21 @@
 			\item Berechne mit Rückwärts-Substitution $L^Tx = y$
 		\end{enumerate}
 	\end{verfahren}
-
+	\textsc{QR-Zerlegung}
+	\sep
+	\begin{satz}[Existenz]
+		Sei $ A \in \mathbb{R}^{\mathbb{M}x\mathbb{N}}$. Dann existiert eine Zerlegung $A=QR$ mit orthogonaler Matrix $Q \in \mathbb{R}^{\mathbb{M}x\mathbb{M}}$ $(QQ^T=I)$ und oberer Dreiecksmatrix $R=\begin{pmatrix}\widetilde{R} \\ 0\end{pmatrix} \in \mathbb{R}^{\mathbb{M}x\mathbb{N}}$, $\widetilde{R} \in \mathbb{R}^{\mathbb{N}x\mathbb{N}}$.
+	\end{satz}
+	\begin{verfahren}[$M=N$, löse $Ax=b$]
+		\begin{enumerate}
+			\item Bestimme Matrizen $Q$ und $R$ mittels Householder-Transformationen mit $A=QR$
+			\item Löse $Qc=b$ ($Q^{-1}=Q^T$ also $c = Q^Tb$)
+			\item Löse $Rx=c$ (Rückwärtssubstitution)
+		\end{enumerate}
+	\end{verfahren}
+	\begin{verfahren}[$M>N$, löse Ausgleichsproblem $||Ax-b||_2=min$]
+		Siehe \ref{qr-ausgleich}
+	\end{verfahren}
 	\textsc{Fixpunktiteration}
 	\sep
 	\begin{definition}[Fixpunkt]
